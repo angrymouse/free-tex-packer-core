@@ -1,0 +1,49 @@
+-- created with FreeTexturePacker (https://github.com/odrick/free-tex-packer
+-- local sheetInfo = require("mysheet")
+-- local myImageSheet = graphics.newImageSheet( "mysheet.png", sheetInfo:getSheet() )
+-- local sprite = display.newSprite( myImageSheet , {frames{sheetInfo:getFrameIndex("sprite")}} )
+--
+
+local SheetInfo = {}
+
+SheetInfo.sheet =
+{
+    frames = { {{ #rects }}
+        {
+            x={{frame.x}},
+            y={{frame.y}},
+            width={{frame.w}},
+            height={{frame.h}},{{ if sprite.trimmed }}
+            sourceX = {{spriteSourceSize.x}},
+            sourceY = {{spriteSourceSize.y}},
+            sourceWidth = {{spriteSourceSize.w}},
+            sourceHeight = {{spriteSourceSize.h}}
+        }{{^last}},{{/last}}{{/rects}}
+    },
+    
+    sheetContentWidth = {{config.imageWidth}},
+    sheetContentHeight =  {{config.imageHeight}}
+}
+
+SheetInfo.frameIndex =
+{
+{{ #rects }}
+    ["{{{name}}}"] = {{ index }} {{^last}},{{/last}}
+{{ /rects }}
+}
+
+
+
+function SheetInfo:getSheet()
+    return self.sheet;
+end
+
+function SheetInfo:getFrameIndex(name)
+    return self.frameIndex[name];
+end
+
+function SheetInfo:getSequenceData()
+    return self.sequenceData;
+end
+
+return SheetInfo
